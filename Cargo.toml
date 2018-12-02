@@ -1,0 +1,6 @@
+[package]
+name = "adventofcode18"
+version = "0.1.0"
+authors = ["Lucas van Dijk <info@lucasvandijk.nl>"]
+
+[dependencies]
