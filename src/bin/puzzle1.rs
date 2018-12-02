@@ -3,10 +3,9 @@ extern crate adventofcode18;
 use std::env;
 use std::process;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
 use std::error::Error;
 
-use adventofcode18::skip_characters;
+use adventofcode18::frequency;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -25,23 +24,9 @@ fn main() {
 }
 
 
-fn determine_freq(filename: &str) -> Result<i32, Box<dyn Error>> {
-    let mut frequency: i32 = 0;
+fn determine_freq(filename: &str) -> Result<isize, Box<dyn Error>> {
     let f = File::open(filename)?;
-
-    let reader = BufReader::new(&f);
-
-    for line in reader.lines() {
-        let l = line?;
-
-        let adjust: i32 = if l.starts_with("+") {
-            skip_characters(&l, 1).trim().parse()?
-        } else {
-            -skip_characters(&l, 1).trim().parse()?
-        };
-
-        frequency += adjust;
-    }
+    let frequency: isize = frequency::frequency_adjustments_iter(&f).sum();
 
     Ok(frequency)
 }
